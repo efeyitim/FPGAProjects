@@ -1,0 +1,78 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/efe/storage/FPGAProjects/LED_fpga
+T_opt
+!s110 1617815081
+VozBS2C@jdnOmdg5Ld7[c<1
+Z1 04 2 4 work tb fast 0
+=1-000ae431a4f1-606de629-da6db-85dc
+o-quiet -auto_acc_if_foreign -work work +acc
+Z2 tCvgOpt 0
+n@_opt
+Z3 OL;O;10.7c;67
+T_opt1
+!s110 1617813398
+V]4NFkCoe6TF=78G1F8i2E3
+R1
+=1-000ae431a4f1-606ddf95-ece8a-8092
+o-quiet -auto_acc_if_foreign -work work
+R2
+n@_opt1
+R3
+R0
+vLED_fpga
+Z4 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+!s110 1617815078
+!i10b 1
+!s100 Di8nTTz6MFK0:2CgfQzmS3
+IJib:4zmPoIEaC4WFJ]b3D2
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+!s105 LED_fpga_sv_unit
+S1
+R0
+w1617815068
+8/home/efe/storage/FPGAProjects/LED_fpga/LED_fpga.sv
+F/home/efe/storage/FPGAProjects/LED_fpga/LED_fpga.sv
+L0 1
+Z6 OL;L;10.7c;67
+r1
+!s85 0
+31
+!s108 1617815078.000000
+!s107 /home/efe/storage/FPGAProjects/LED_fpga/LED_fpga.sv|
+!s90 -reportprogress|300|-work|work|-L|mtiAvm|-L|mtiRnm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/efe/storage/FPGAProjects/LED_fpga/LED_fpga.sv|
+!i113 0
+Z7 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+n@l@e@d_fpga
+vtb
+R4
+!s110 1617814700
+!i10b 1
+!s100 UzCO;XjKTS5;4H=aW3`ok2
+IUOB9m;BzjaXjl>485<c2@1
+R5
+!s105 tb_sv_unit
+S1
+R0
+w1617814574
+8/home/efe/storage/FPGAProjects/LED_fpga/tb.sv
+F/home/efe/storage/FPGAProjects/LED_fpga/tb.sv
+L0 1
+R6
+r1
+!s85 0
+31
+!s108 1617814700.000000
+!s107 /home/efe/storage/FPGAProjects/LED_fpga/tb.sv|
+!s90 -reportprogress|300|-work|work|-L|mtiAvm|-L|mtiRnm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|/home/efe/storage/FPGAProjects/LED_fpga/tb.sv|
+!i113 0
+R7
+R2
