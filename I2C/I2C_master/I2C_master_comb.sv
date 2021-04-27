@@ -102,7 +102,7 @@ module I2C_master_comb
 		
 		else
 		begin
-			if (r_clock_counter == CLK_RATIO/4)
+			if (r_clock_counter == CLK_RATIO/4 - 1)
 			begin
 				r_clock_regions <= r_clock_regions + 2'b01;
 				r_clock_counter <= 0;
