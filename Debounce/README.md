@@ -1,0 +1,1 @@
+This work is still ongoing. Unlike before, I have used VHDL this time. Debounce module is implemented and tested using a testbench again written in VHDL. This design is not tested on an actual FPGA board.
