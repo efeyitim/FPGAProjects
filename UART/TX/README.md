@@ -1,1 +1,1 @@
-
+UART transmitter is implemented in VHDL. uart_tx.vhd file contains the transmitter module, top.vhd file contains the top module (this project has not been tested yet on an FPGA board) which is for sending two bytes set by the switches on the board when a button is pressed, debounce.vhd is for debouncing the button, and the tb_uart_tx.vhd file is the test bench file of the uart_tx module. 
