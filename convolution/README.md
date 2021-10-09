@@ -1,0 +1,3 @@
+This project is about implementing convolution in signal processing. The number of coefficients, length of the coefficients, data length, and the power of two of the coefficient are generics. It means that every FIR filter can be implemented using this design. For simulation purposes, I have designed a low-pass filter and gave its coefficients to the design. I have used a signal which is summation of two signals at 10 Hz and 10 KHz, sampled at 100 KHz. The output is desired as can be seen from the image below. I did not implement this project into an FPGA because I do not have required hardware to generate test signals.
+
+![image](https://user-images.githubusercontent.com/62470610/136661517-7c63a7e1-3d08-41b3-8015-f3150b8807f2.png)
