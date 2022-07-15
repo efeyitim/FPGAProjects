@@ -43,9 +43,16 @@ int main(int argc, char *argv[])
 	  quotient = ~(~quotient<<1);
 	  remainder = res;	  
 	}
+      else
+	{
+	  quotient = quotient << 1;
+	}
       divisor = divisor >> 1;
+      printf("ROUND%d\n", len);
+      printf("quotient = %d\n", quotient);
+      printf("remainder = %d\n", remainder);            
     }
-  printf("quotient = %d\n", quotient);
-  printf("remainder = %d\n", remainder);
+  //printf("quotient = %d\n", quotient);
+  //printf("remainder = %d\n", remainder);
   return 0;
 }

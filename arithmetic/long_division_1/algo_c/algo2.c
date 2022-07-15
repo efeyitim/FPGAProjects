@@ -3,8 +3,8 @@
 
 int main(int argc, char *argv[])
 {
-  int dividend;
-  int divisor;
+  long long int dividend;
+  long long int divisor;
   if(argc != 3)
     {
       printf("Enter only two numbers!\n");
@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
       divisor = atoi(argv[2]);
     }
 
-  int i = 1;
-  int len = 0;
+  long long int i = 1;
+  long long int len = 0;
   while(true)
     {
       if(i > dividend)
@@ -31,10 +31,11 @@ int main(int argc, char *argv[])
 	}                  
     }
 
+  len = 32;
   divisor = divisor << len;
-  int res;
-  int quotient = 0;
-  int remainder = dividend;
+  long long int res;
+  long long int quotient = 0;
+  long long int remainder = dividend;
   for(; len >= 0; len--)
     {
       res = remainder - divisor;
@@ -48,8 +49,11 @@ int main(int argc, char *argv[])
 	  quotient = quotient << 1;
 	}
       divisor = divisor >> 1;
+      printf("ROUND%lld\n", len);
+      printf("quotient = %lld\n", quotient);
+      printf("remainder = %lld\n", remainder);            
     }
-  printf("quotient = %d\n", quotient);
-  printf("remainder = %d\n", remainder);
+  //printf("quotient = %lld\n", quotient);
+  //printf("remainder = %lld\n", remainder);
   return 0;
 }
