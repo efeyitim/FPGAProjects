@@ -1,0 +1,20 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity multiplicator is
+
+    generic (
+	LENGTH : integer := 5);		-- length of dividend and divisor in log2(X) form
+
+    port (
+	clk	     : in  std_logic;					-- clk
+	rst_n	     : in  std_logic;					-- active low reset
+	en	     : in  std_logic;					-- enable signal
+	multiplicand : in  std_logic_vector(2**LENGTH-1 downto 0);	-- dividend
+	multiplier   : in  std_logic_vector(2**LENGTH-1 downto 0);	-- divisor
+	product	     : out std_logic_vector(2**(LENGTH+1)-1 downto 0);	-- quotient
+	busy	     : out std_logic;					-- busy signal
+	done	     : out std_logic);					-- done signal
+
+end entity multiplicator;
