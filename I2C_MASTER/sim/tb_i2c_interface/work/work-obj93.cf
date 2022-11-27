@@ -1,0 +1,7 @@
+v 4
+file "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/I2C_MASTER/sim/tb_i2c_interface/" "tb_i2c_interface.vhd" "ff4faa2a031b8de1d689f683de83637afd1151b0" "20221127204432.054":
+  entity tb_i2c_interface at 15( 698) + 0 on 107;
+  architecture tb of tb_i2c_interface at 26( 1104) + 0 on 108;
+file "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/I2C_MASTER/sim/tb_i2c_interface/" "../../src/i2c_interface.vhd" "9f6e54ee16b65c4b005ac26c8abd0af3f1029351" "20221127204432.041":
+  entity i2c_interface at 14( 723) + 0 on 105;
+  architecture rtl of i2c_interface at 38( 2150) + 0 on 106;
