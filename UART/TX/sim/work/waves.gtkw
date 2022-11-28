@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sun Nov 27 16:45:44 2022
+[*] Mon Nov 28 17:44:38 2022
 [*]
 [dumpfile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_TX/sim/work/sim.ghw"
-[dumpfile_mtime] "Sun Nov 27 16:44:40 2022"
-[dumpfile_size] 160508
+[dumpfile_mtime] "Mon Nov 28 17:43:59 2022"
+[dumpfile_size] 317259
 [savefile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_TX/sim/work/waves.gtkw"
 [timestart] 0
 [size] 1920 1016
-[pos] -39 -39
-*-34.490437 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-35.473820 49100000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.tb_uart_tx.
 [treeopen] top.tb_uart_tx.u_dut.
