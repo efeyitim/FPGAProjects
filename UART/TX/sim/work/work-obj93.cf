@@ -1,7 +1,0 @@
-v 4
-file "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_TX/sim/" "tb_uart_tx.vhd" "fc2b172cccd2f596075655686c079460b71b4599" "20221127165722.519":
-  entity tb_uart_tx at 15( 698) + 0 on 33;
-  architecture tb of tb_uart_tx at 26( 1092) + 0 on 34;
-file "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_TX/sim/" "../src/uart_tx.vhd" "45cf476e7e5fb87add1fac5da9623b2f6bd72f94" "20221127165722.506":
-  entity uart_tx at 14( 717) + 0 on 31;
-  architecture behavioral of uart_tx at 37( 1290) + 0 on 32;
