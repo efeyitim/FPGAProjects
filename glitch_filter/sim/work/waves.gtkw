@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Mon Nov 28 17:56:49 2022
+[*]
+[dumpfile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/glitch_filter/sim/work/sim.ghw"
+[dumpfile_mtime] "Mon Nov 28 17:56:29 2022"
+[dumpfile_size] 371136
+[savefile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/glitch_filter/sim/work/waves.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-35.745617 79500000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.tb_glitch_filter.
+[treeopen] top.tb_glitch_filter.u_dut.
+[sst_width] 233
+[signals_width] 134
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+top.tb_glitch_filter.u_dut.clk
+top.tb_glitch_filter.u_dut.rst_n
+top.tb_glitch_filter.u_dut.din
+top.tb_glitch_filter.u_dut.dout
+@22
+#{top.tb_glitch_filter.u_dut.counter[31:0]} top.tb_glitch_filter.u_dut.counter[31] top.tb_glitch_filter.u_dut.counter[30] top.tb_glitch_filter.u_dut.counter[29] top.tb_glitch_filter.u_dut.counter[28] top.tb_glitch_filter.u_dut.counter[27] top.tb_glitch_filter.u_dut.counter[26] top.tb_glitch_filter.u_dut.counter[25] top.tb_glitch_filter.u_dut.counter[24] top.tb_glitch_filter.u_dut.counter[23] top.tb_glitch_filter.u_dut.counter[22] top.tb_glitch_filter.u_dut.counter[21] top.tb_glitch_filter.u_dut.counter[20] top.tb_glitch_filter.u_dut.counter[19] top.tb_glitch_filter.u_dut.counter[18] top.tb_glitch_filter.u_dut.counter[17] top.tb_glitch_filter.u_dut.counter[16] top.tb_glitch_filter.u_dut.counter[15] top.tb_glitch_filter.u_dut.counter[14] top.tb_glitch_filter.u_dut.counter[13] top.tb_glitch_filter.u_dut.counter[12] top.tb_glitch_filter.u_dut.counter[11] top.tb_glitch_filter.u_dut.counter[10] top.tb_glitch_filter.u_dut.counter[9] top.tb_glitch_filter.u_dut.counter[8] top.tb_glitch_filter.u_dut.counter[7] top.tb_glitch_filter.u_dut.counter[6] top.tb_glitch_filter.u_dut.counter[5] top.tb_glitch_filter.u_dut.counter[4] top.tb_glitch_filter.u_dut.counter[3] top.tb_glitch_filter.u_dut.counter[2] top.tb_glitch_filter.u_dut.counter[1] top.tb_glitch_filter.u_dut.counter[0]
+@421
+top.tb_glitch_filter.u_dut.state
+[pattern_trace] 1
+[pattern_trace] 0
