@@ -30,17 +30,17 @@ architecture tb of tb_uart_rx is
     constant BAUD_RATE     : integer := 115_200;
     constant NUM_DATA_BITS : integer := 8;
     constant NUM_STOP_BITS : integer := 1;
-
+    constant ENABLE_PARITY : boolean := true;
+    constant ODD_PARITY    : boolean := true;
     constant DATA_BIT_TIME : integer := CLK_FREQ / BAUD_RATE;
 
     -- component ports
-    signal clk            : std_logic := '0';
-    signal rst_n          : std_logic := '0';
-    signal rx           : std_logic := '1';
-    signal rx_dout         : std_logic_vector (7 downto 0);
-    signal rx_done : std_logic;
-    signal rx_error       : std_logic_vector(1 downto 0);
-
+    signal clk      : std_logic := '0';
+    signal rst_n    : std_logic := '0';
+    signal rx       : std_logic := '1';
+    signal rx_dout  : std_logic_vector (NUM_DATA_BITS - 1 downto 0);
+    signal rx_done  : std_logic;
+    signal rx_error : std_logic_vector(2 downto 0);
 
     procedure waitNre(signal clock : std_ulogic; n : positive) is
     begin
@@ -49,18 +49,37 @@ architecture tb of tb_uart_rx is
         end loop;
     end procedure waitNre;
 
+    -- -2008 use unitary AND without parameter instead of call:
+    function reduce_xor (inp : std_logic_vector) return std_logic is
+        variable retval      : std_logic := '0';
+    begin
+        for i in inp'range loop
+            retval                       := retval xor inp(i);
+        end loop;
+        return retval;
+    end function;
+
     procedure send_byte (
         constant byte_in : in  std_logic_vector;
-        signal rx        : out std_logic
+        signal rx_p      : out std_logic
         ) is
     begin
-        rx     <= '0';
+        rx_p         <= '0';
         waitNre(clk, DATA_BIT_TIME);
         for i in byte_in'range loop
-            rx <= byte_in(i);
+            rx_p     <= byte_in(i);
             waitNre(clk, DATA_BIT_TIME);
         end loop;
-        rx     <= '1';
+        if ENABLE_PARITY then
+            if ODD_PARITY then
+                rx_p <= not reduce_xor(byte_in);
+            end if;
+            if not ODD_PARITY then
+                rx_p <= reduce_xor(byte_in);
+            end if;
+            waitNre(clk, DATA_BIT_TIME);
+        end if;
+        rx_p         <= '1';
         waitNre(clk, DATA_BIT_TIME);
     end send_byte;
 
@@ -71,15 +90,17 @@ begin  -- architecture tb
         generic map (
             CLK_FREQ      => CLK_FREQ,
             BAUD_RATE     => BAUD_RATE,
+            ENABLE_PARITY => ENABLE_PARITY,
+            ODD_PARITY    => ODD_PARITY,
             NUM_DATA_BITS => NUM_DATA_BITS,
             NUM_STOP_BITS => NUM_STOP_BITS)
         port map (
-            clk      => clk,
-            rst_n    => rst_n,
-            rx       => rx,
-            rx_dout  => rx_dout,
-            rx_done  => rx_done,
-            rx_error => rx_error);
+            clk           => clk,
+            rst_n         => rst_n,
+            rx            => rx,
+            rx_dout       => rx_dout,
+            rx_done       => rx_done,
+            rx_error      => rx_error);
 
     -- clock generation
     clk <= not clk after 10 ns;
@@ -92,11 +113,17 @@ begin  -- architecture tb
         waitNre(clk, 5);
         rst_n <= '1';
         waitNre(clk, 100);
-        rx  <= '0';
+        rx    <= '0';
         waitNre(clk, 50);
-        rx  <= '1';
+        rx    <= '1';
         waitNre(clk, 1000);
         send_byte(x"A5", rx);
+        waitNre(clk, 100);
+        send_byte(x"C3", rx);
+        waitNre(clk, 100);
+        send_byte(x"F1", rx);
+        waitNre(clk, 100);
+        send_byte(x"00", rx);
         waitNre(clk, 100);
         report "SIM DONE" severity failure;
         wait;

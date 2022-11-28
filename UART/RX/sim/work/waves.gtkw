@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Mon Nov 28 17:28:35 2022
+[*]
+[dumpfile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_RX/sim/work/sim.ghw"
+[dumpfile_mtime] "Mon Nov 28 17:24:03 2022"
+[dumpfile_size] 367054
+[savefile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/UART/UART_RX/sim/work/waves.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-35.782059 97070000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.tb_uart_rx.
+[treeopen] top.tb_uart_rx.u_dut.
+[sst_width] 233
+[signals_width] 236
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+top.tb_uart_rx.u_dut.clk
+top.tb_uart_rx.u_dut.rst_n
+top.tb_uart_rx.u_dut.rx
+top.tb_uart_rx.u_dut.rx_done
+@420
+top.tb_uart_rx.u_dut.state
+@28
+top.tb_uart_rx.u_dut.data_parity
+#{top.tb_uart_rx.rx_error[2:0]} top.tb_uart_rx.rx_error[2] top.tb_uart_rx.rx_error[1] top.tb_uart_rx.rx_error[0]
+@22
+#{top.tb_uart_rx.rx_dout[7:0]} top.tb_uart_rx.rx_dout[7] top.tb_uart_rx.rx_dout[6] top.tb_uart_rx.rx_dout[5] top.tb_uart_rx.rx_dout[4] top.tb_uart_rx.rx_dout[3] top.tb_uart_rx.rx_dout[2] top.tb_uart_rx.rx_dout[1] top.tb_uart_rx.rx_dout[0]
+#{top.tb_uart_rx.u_dut.shift_reg[7:0]} top.tb_uart_rx.u_dut.shift_reg[7] top.tb_uart_rx.u_dut.shift_reg[6] top.tb_uart_rx.u_dut.shift_reg[5] top.tb_uart_rx.u_dut.shift_reg[4] top.tb_uart_rx.u_dut.shift_reg[3] top.tb_uart_rx.u_dut.shift_reg[2] top.tb_uart_rx.u_dut.shift_reg[1] top.tb_uart_rx.u_dut.shift_reg[0]
+@23
+#{top.tb_uart_rx.u_dut.bit_counter[3:0]} top.tb_uart_rx.u_dut.bit_counter[3] top.tb_uart_rx.u_dut.bit_counter[2] top.tb_uart_rx.u_dut.bit_counter[1] top.tb_uart_rx.u_dut.bit_counter[0]
+@22
+#{top.tb_uart_rx.u_dut.bit_timer[31:0]} top.tb_uart_rx.u_dut.bit_timer[31] top.tb_uart_rx.u_dut.bit_timer[30] top.tb_uart_rx.u_dut.bit_timer[29] top.tb_uart_rx.u_dut.bit_timer[28] top.tb_uart_rx.u_dut.bit_timer[27] top.tb_uart_rx.u_dut.bit_timer[26] top.tb_uart_rx.u_dut.bit_timer[25] top.tb_uart_rx.u_dut.bit_timer[24] top.tb_uart_rx.u_dut.bit_timer[23] top.tb_uart_rx.u_dut.bit_timer[22] top.tb_uart_rx.u_dut.bit_timer[21] top.tb_uart_rx.u_dut.bit_timer[20] top.tb_uart_rx.u_dut.bit_timer[19] top.tb_uart_rx.u_dut.bit_timer[18] top.tb_uart_rx.u_dut.bit_timer[17] top.tb_uart_rx.u_dut.bit_timer[16] top.tb_uart_rx.u_dut.bit_timer[15] top.tb_uart_rx.u_dut.bit_timer[14] top.tb_uart_rx.u_dut.bit_timer[13] top.tb_uart_rx.u_dut.bit_timer[12] top.tb_uart_rx.u_dut.bit_timer[11] top.tb_uart_rx.u_dut.bit_timer[10] top.tb_uart_rx.u_dut.bit_timer[9] top.tb_uart_rx.u_dut.bit_timer[8] top.tb_uart_rx.u_dut.bit_timer[7] top.tb_uart_rx.u_dut.bit_timer[6] top.tb_uart_rx.u_dut.bit_timer[5] top.tb_uart_rx.u_dut.bit_timer[4] top.tb_uart_rx.u_dut.bit_timer[3] top.tb_uart_rx.u_dut.bit_timer[2] top.tb_uart_rx.u_dut.bit_timer[1] top.tb_uart_rx.u_dut.bit_timer[0]
+[pattern_trace] 1
+[pattern_trace] 0
