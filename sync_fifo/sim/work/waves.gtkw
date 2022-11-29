@@ -1,0 +1,58 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Tue Nov 29 19:23:21 2022
+[*]
+[dumpfile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/sync_fifo/sim/work/sim.ghw"
+[dumpfile_mtime] "Tue Nov 29 19:23:18 2022"
+[dumpfile_size] 1899
+[savefile] "/home/efe/storage/Projects/FPGAProjects/VHDL/ip_repo/sync_fifo/sim/work/waves.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-27.171822 443700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.tb_sync_fifo.
+[treeopen] top.tb_sync_fifo.u_dut.
+[sst_width] 233
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+top.tb_sync_fifo.u_dut.clk
+top.tb_sync_fifo.u_dut.aclr
+top.tb_sync_fifo.u_dut.wrreq
+@22
+#{top.tb_sync_fifo.u_dut.data[3:0]} top.tb_sync_fifo.u_dut.data[3] top.tb_sync_fifo.u_dut.data[2] top.tb_sync_fifo.u_dut.data[1] top.tb_sync_fifo.u_dut.data[0]
+@28
+top.tb_sync_fifo.u_dut.rdreq
+@22
+#{top.tb_sync_fifo.u_dut.q[3:0]} top.tb_sync_fifo.u_dut.q[3] top.tb_sync_fifo.u_dut.q[2] top.tb_sync_fifo.u_dut.q[1] top.tb_sync_fifo.u_dut.q[0]
+@28
+top.tb_sync_fifo.u_dut.full
+top.tb_sync_fifo.u_dut.empty
+@22
+#{top.tb_sync_fifo.u_dut.raddr[3:0]} top.tb_sync_fifo.u_dut.raddr[3] top.tb_sync_fifo.u_dut.raddr[2] top.tb_sync_fifo.u_dut.raddr[1] top.tb_sync_fifo.u_dut.raddr[0]
+#{top.tb_sync_fifo.u_dut.waddr[3:0]} top.tb_sync_fifo.u_dut.waddr[3] top.tb_sync_fifo.u_dut.waddr[2] top.tb_sync_fifo.u_dut.waddr[1] top.tb_sync_fifo.u_dut.waddr[0]
+#{top.tb_sync_fifo.u_dut.usedw[3:0]} top.tb_sync_fifo.u_dut.usedw[3] top.tb_sync_fifo.u_dut.usedw[2] top.tb_sync_fifo.u_dut.usedw[1] top.tb_sync_fifo.u_dut.usedw[0]
+@200
+-
+-
+@23
+#{top.tb_sync_fifo.u_dut.mem[0][3:0]} top.tb_sync_fifo.u_dut.mem[0][3] top.tb_sync_fifo.u_dut.mem[0][2] top.tb_sync_fifo.u_dut.mem[0][1] top.tb_sync_fifo.u_dut.mem[0][0]
+#{top.tb_sync_fifo.u_dut.mem[1][3:0]} top.tb_sync_fifo.u_dut.mem[1][3] top.tb_sync_fifo.u_dut.mem[1][2] top.tb_sync_fifo.u_dut.mem[1][1] top.tb_sync_fifo.u_dut.mem[1][0]
+#{top.tb_sync_fifo.u_dut.mem[2][3:0]} top.tb_sync_fifo.u_dut.mem[2][3] top.tb_sync_fifo.u_dut.mem[2][2] top.tb_sync_fifo.u_dut.mem[2][1] top.tb_sync_fifo.u_dut.mem[2][0]
+#{top.tb_sync_fifo.u_dut.mem[3][3:0]} top.tb_sync_fifo.u_dut.mem[3][3] top.tb_sync_fifo.u_dut.mem[3][2] top.tb_sync_fifo.u_dut.mem[3][1] top.tb_sync_fifo.u_dut.mem[3][0]
+#{top.tb_sync_fifo.u_dut.mem[4][3:0]} top.tb_sync_fifo.u_dut.mem[4][3] top.tb_sync_fifo.u_dut.mem[4][2] top.tb_sync_fifo.u_dut.mem[4][1] top.tb_sync_fifo.u_dut.mem[4][0]
+#{top.tb_sync_fifo.u_dut.mem[5][3:0]} top.tb_sync_fifo.u_dut.mem[5][3] top.tb_sync_fifo.u_dut.mem[5][2] top.tb_sync_fifo.u_dut.mem[5][1] top.tb_sync_fifo.u_dut.mem[5][0]
+#{top.tb_sync_fifo.u_dut.mem[6][3:0]} top.tb_sync_fifo.u_dut.mem[6][3] top.tb_sync_fifo.u_dut.mem[6][2] top.tb_sync_fifo.u_dut.mem[6][1] top.tb_sync_fifo.u_dut.mem[6][0]
+#{top.tb_sync_fifo.u_dut.mem[7][3:0]} top.tb_sync_fifo.u_dut.mem[7][3] top.tb_sync_fifo.u_dut.mem[7][2] top.tb_sync_fifo.u_dut.mem[7][1] top.tb_sync_fifo.u_dut.mem[7][0]
+#{top.tb_sync_fifo.u_dut.mem[8][3:0]} top.tb_sync_fifo.u_dut.mem[8][3] top.tb_sync_fifo.u_dut.mem[8][2] top.tb_sync_fifo.u_dut.mem[8][1] top.tb_sync_fifo.u_dut.mem[8][0]
+#{top.tb_sync_fifo.u_dut.mem[9][3:0]} top.tb_sync_fifo.u_dut.mem[9][3] top.tb_sync_fifo.u_dut.mem[9][2] top.tb_sync_fifo.u_dut.mem[9][1] top.tb_sync_fifo.u_dut.mem[9][0]
+#{top.tb_sync_fifo.u_dut.mem[10][3:0]} top.tb_sync_fifo.u_dut.mem[10][3] top.tb_sync_fifo.u_dut.mem[10][2] top.tb_sync_fifo.u_dut.mem[10][1] top.tb_sync_fifo.u_dut.mem[10][0]
+#{top.tb_sync_fifo.u_dut.mem[11][3:0]} top.tb_sync_fifo.u_dut.mem[11][3] top.tb_sync_fifo.u_dut.mem[11][2] top.tb_sync_fifo.u_dut.mem[11][1] top.tb_sync_fifo.u_dut.mem[11][0]
+#{top.tb_sync_fifo.u_dut.mem[12][3:0]} top.tb_sync_fifo.u_dut.mem[12][3] top.tb_sync_fifo.u_dut.mem[12][2] top.tb_sync_fifo.u_dut.mem[12][1] top.tb_sync_fifo.u_dut.mem[12][0]
+#{top.tb_sync_fifo.u_dut.mem[13][3:0]} top.tb_sync_fifo.u_dut.mem[13][3] top.tb_sync_fifo.u_dut.mem[13][2] top.tb_sync_fifo.u_dut.mem[13][1] top.tb_sync_fifo.u_dut.mem[13][0]
+#{top.tb_sync_fifo.u_dut.mem[14][3:0]} top.tb_sync_fifo.u_dut.mem[14][3] top.tb_sync_fifo.u_dut.mem[14][2] top.tb_sync_fifo.u_dut.mem[14][1] top.tb_sync_fifo.u_dut.mem[14][0]
+#{top.tb_sync_fifo.u_dut.mem[15][3:0]} top.tb_sync_fifo.u_dut.mem[15][3] top.tb_sync_fifo.u_dut.mem[15][2] top.tb_sync_fifo.u_dut.mem[15][1] top.tb_sync_fifo.u_dut.mem[15][0]
+[pattern_trace] 1
+[pattern_trace] 0
