@@ -223,7 +223,11 @@ begin  -- architecture rtl
 
     rdusedw <= rdusedw_buf;
 
-    FWFT_FALSE_GENERATE   : if FWFT_EN generate
+    FWFT_TRUE_GENERATE : if FWFT_EN generate
+        q <= mem(to_integer(unsigned(raddr)));
+    end generate FWFT_TRUE_GENERATE;
+    
+    FWFT_FALSE_GENERATE   : if not FWFT_EN generate
         FWFT_FALSE_BLOCK  : block
         begin
             PROC_PIPELINE : process (rdclk, rdaclr) is
@@ -238,10 +242,6 @@ begin  -- architecture rtl
             end process PROC_PIPELINE;
         end block FWFT_FALSE_BLOCK;
     end generate FWFT_FALSE_GENERATE;
-
-    FWFT_TRUE_GENERATE : if not FWFT_EN generate
-        q <= mem(to_integer(unsigned(raddr)));
-    end generate FWFT_TRUE_GENERATE;
 
 end architecture rtl;
 
