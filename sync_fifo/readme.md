@@ -1,0 +1,1 @@
+Generic Synchronous (Single Clock) FIFO implemented in VHDL. Design is simulated using GHDL and GTKWave is used to view resulting waveform. One can execute sim.sh to view the simulation waveform.<br/>
