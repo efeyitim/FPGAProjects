@@ -176,9 +176,9 @@ entity AXIR_FIFO is
         -- accept the read data and response information.
         S_AXI_RREADY   : in  std_logic
         );
-end AXI_Bloom_Filter_v1_0_S00_AXI;
+end AXIR_FIFO;
 
-architecture arch_imp of AXI_Bloom_Filter_v1_0_S00_AXI is
+architecture arch_imp of AXIR_FIFO is
 
     -- AXI4FULL signals
     signal axi_arready      : std_logic;
@@ -196,7 +196,7 @@ architecture arch_imp of AXI_Bloom_Filter_v1_0_S00_AXI is
     ---- Signals for user logic memory space example
     --------------------------------------------------
     signal fifo_rdreq       : std_logic;
-    signal data_out         : std_logic_vector(WRITE_FIFO_WIDTH - 1 downto 0);
+    signal data_out         : std_logic_vector(READ_WIDTH - 1 downto 0);
     signal wrcount_buf      : std_logic_vector(WRITE_COUNT_BITS - 1 downto 0);
     signal rdcount_buf      : std_logic_vector(READ_COUNT_BITS - 1 downto 0);
     signal full_buf         : std_logic;
