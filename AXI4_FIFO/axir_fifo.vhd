@@ -201,6 +201,7 @@ architecture arch_imp of AXI_Bloom_Filter_v1_0_S00_AXI is
     signal rdcount_buf      : std_logic_vector(READ_COUNT_BITS - 1 downto 0);
     signal full_buf         : std_logic;
     signal empty_buf        : std_logic;
+    signal rst              : std_logic;
 
 begin
     -- I/O Connections assignments
@@ -218,7 +219,7 @@ begin
     S_AXI_RVALID  <= axi_rvalid;
     S_AXI_BID     <= S_AXI_AWID;
     S_AXI_RID     <= S_AXI_ARID;
-
+    rst           <= not S_AXI_ARESETN;
     -- Implement axi_arready generation
 
     -- axi_arready is asserted for one S_AXI_ACLK clock cycle when
