@@ -1,6 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+library xpm;
+use xpm.vcomponents.all;
 
 entity AXIR_FIFO is
     generic (
@@ -35,7 +37,7 @@ entity AXIR_FIFO is
         -- Users to add ports here
         core_clk             : in  std_logic;                         -- core clock
         wrreq                : in  std_logic;
-        data                    : in std_logic_vector(WRITE_WIDTH - 1 downto 0);
+        data                 : in  std_logic_vector(WRITE_WIDTH - 1 downto 0);
         wrcount              : out std_logic_vector(WRITE_COUNT_BITS - 1 downto 0);
         rdcount              : out std_logic_vector(READ_COUNT_BITS - 1 downto 0);
         empty                : out std_logic;
@@ -179,7 +181,6 @@ end AXI_Bloom_Filter_v1_0_S00_AXI;
 architecture arch_imp of AXI_Bloom_Filter_v1_0_S00_AXI is
 
     -- AXI4FULL signals
-    signal axi_araddr       : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
     signal axi_arready      : std_logic;
     signal axi_rdata        : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal axi_rresp        : std_logic_vector(1 downto 0);
@@ -190,31 +191,25 @@ architecture arch_imp of AXI_Bloom_Filter_v1_0_S00_AXI is
     signal axi_arv_arr_flag : std_logic;
     --The axi_arlen_cntr internal read address counter to keep track of beats in a burst transaction
     signal axi_arlen_cntr   : std_logic_vector(7 downto 0);
-    signal axi_arburst      : std_logic_vector(2-1 downto 0);
     signal axi_arlen        : std_logic_vector(8-1 downto 0);
     ------------------------------------------------
     ---- Signals for user logic memory space example
     --------------------------------------------------
-    signal fifo_wrreq          : std_logic;
-    signal fifo_rdreq          : std_logic;
-    signal data_out            : std_logic_vector(WRITE_FIFO_WIDTH - 1 downto 0);
-    signal rx_wrcount_buf      : std_logic_vector(9 downto 0);
-    signal rx_rdcount_buf      : std_logic_vector(9 downto 0);
-    signal rx_full_buf         : std_logic;
-    signal rx_empty_buf        : std_logic;
-    signal tx_wrcount_buf      : std_logic_vector(9 downto 0);
-    signal tx_rdcount_buf      : std_logic_vector(9 downto 0);
-    signal tx_full_buf         : std_logic;
-    signal tx_empty_buf        : std_logic;
+    signal fifo_rdreq       : std_logic;
+    signal data_out         : std_logic_vector(WRITE_FIFO_WIDTH - 1 downto 0);
+    signal wrcount_buf      : std_logic_vector(WRITE_COUNT_BITS - 1 downto 0);
+    signal rdcount_buf      : std_logic_vector(READ_COUNT_BITS - 1 downto 0);
+    signal full_buf         : std_logic;
+    signal empty_buf        : std_logic;
 
 begin
     -- I/O Connections assignments
 
-    S_AXI_AWREADY <= axi_awready;
-    S_AXI_WREADY  <= axi_wready;
-    S_AXI_BRESP   <= axi_bresp;
-    S_AXI_BUSER   <= axi_buser;
-    S_AXI_BVALID  <= axi_bvalid;
+    S_AXI_AWREADY <= '0';
+    S_AXI_WREADY  <= '0';
+    S_AXI_BRESP   <= (others => '0');
+    S_AXI_BUSER   <= (others => '0');
+    S_AXI_BVALID  <= '0';
     S_AXI_ARREADY <= axi_arready;
     S_AXI_RDATA   <= axi_rdata;
     S_AXI_RRESP   <= axi_rresp;
@@ -223,135 +218,7 @@ begin
     S_AXI_RVALID  <= axi_rvalid;
     S_AXI_BID     <= S_AXI_AWID;
     S_AXI_RID     <= S_AXI_ARID;
-    aw_wrap_size  <= ((C_S_AXI_DATA_WIDTH)/8 * to_integer(unsigned(axi_awlen)));
-    ar_wrap_size  <= ((C_S_AXI_DATA_WIDTH)/8 * to_integer(unsigned(axi_arlen)));
-    aw_wrap_en    <= '1' when (((axi_awaddr and std_logic_vector(to_unsigned(aw_wrap_size, C_S_AXI_ADDR_WIDTH))) xor std_logic_vector(to_unsigned(aw_wrap_size, C_S_AXI_ADDR_WIDTH))) = low) else '0';
-    ar_wrap_en    <= '1' when (((axi_araddr and std_logic_vector(to_unsigned(ar_wrap_size, C_S_AXI_ADDR_WIDTH))) xor std_logic_vector(to_unsigned(ar_wrap_size, C_S_AXI_ADDR_WIDTH))) = low) else '0';
 
-    -- Implement axi_awready generation
-
-    -- axi_awready is asserted for one S_AXI_ACLK clock cycle when both
-    -- S_AXI_AWVALID and S_AXI_WVALID are asserted. axi_awready is
-    -- de-asserted when reset is low.
-
-    process (S_AXI_ACLK)
-    begin
-        if rising_edge(S_AXI_ACLK) then
-            if S_AXI_ARESETN = '0' then
-                axi_awready          <= '0';
-                axi_awv_awr_flag     <= '0';
-            else
-                if (axi_awready = '0' and S_AXI_AWVALID = '1' and axi_awv_awr_flag = '0' and axi_arv_arr_flag = '0') then
-                    -- slave is ready to accept an address and
-                    -- associated control signals
-                    axi_awv_awr_flag <= '1';                          -- used for generation of bresp() and bvalid
-                    axi_awready      <= '1';
-                elsif (S_AXI_WLAST = '1' and axi_wready = '1') then
-                    -- preparing to accept next address after current write burst tx completion
-                    axi_awv_awr_flag <= '0';
-                else
-                    axi_awready      <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
-    -- Implement axi_awaddr latching
-
-    -- This process is used to latch the address when both 
-    -- S_AXI_AWVALID and S_AXI_WVALID are valid. 
-
-    process (S_AXI_ACLK)
-    begin
-        if rising_edge(S_AXI_ACLK) then
-            if S_AXI_ARESETN = '0' then
-                axi_awaddr            <= (others => '0');
-                axi_awburst           <= (others => '0');
-                axi_awlen             <= (others => '0');
-                axi_awlen_cntr        <= (others => '0');
-            -- fifo_wrreq         <= '0';
-            else
-                if (axi_awready = '0' and S_AXI_AWVALID = '1' and axi_awv_awr_flag = '0') then
-                    -- address latching
-                    -- fifo_wrreq         <= '0';
-                    axi_awaddr        <= S_AXI_AWADDR(C_S_AXI_ADDR_WIDTH - 1 downto 0);  ---- start address of transfer
-                    axi_awlen_cntr    <= (others => '0');
-                    axi_awburst       <= S_AXI_AWBURST;
-                    axi_awlen         <= S_AXI_AWLEN;
-                elsif((axi_awlen_cntr <= axi_awlen) and axi_wready = '1' and S_AXI_WVALID = '1') then
-                    -- fifo_wrreq         <= '1';
-                    axi_awlen_cntr    <= std_logic_vector (unsigned(axi_awlen_cntr) + 1);
-
-                    case (axi_awburst) is
-                        when "00"                                                             =>        -- fixed burst
-                            -- The write address for all the beats in the transaction are fixed
-                            axi_awaddr                                             <= axi_awaddr;       ----for awsize = 4 bytes (010)
-                        when "01"                                                             =>        --incremental burst
-                            -- The write address for all the beats in the transaction are increments by awsize
-                            axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)     <= std_logic_vector (unsigned(axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --awaddr aligned to 4 byte boundary
-                            axi_awaddr(ADDR_LSB-1 downto 0)                        <= (others => '0');  ----for awsize = 4 bytes (010)
-                        when "10"                                                             =>        --Wrapping burst
-                            -- The write address wraps when the address reaches wrap boundary 
-                            if (aw_wrap_en = '1') then
-                                axi_awaddr                                         <= std_logic_vector (unsigned(axi_awaddr) - (to_unsigned(aw_wrap_size, C_S_AXI_ADDR_WIDTH)));
-                            else
-                                axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB) <= std_logic_vector (unsigned(axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --awaddr aligned to 4 byte boundary
-                                axi_awaddr(ADDR_LSB-1 downto 0)                    <= (others => '0');  ----for awsize = 4 bytes (010)
-                            end if;
-                        when others                                                           =>        --reserved (incremental burst for example)
-                            axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)     <= std_logic_vector (unsigned(axi_awaddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --for awsize = 4 bytes (010)
-                            axi_awaddr(ADDR_LSB-1 downto 0)                        <= (others => '0');
-                    end case;
-                end if;
-            end if;
-        end if;
-    end process;
-    -- Implement axi_wready generation
-
-    -- axi_wready is asserted for one S_AXI_ACLK clock cycle when both
-    -- S_AXI_AWVALID and S_AXI_WVALID are asserted. axi_wready is 
-    -- de-asserted when reset is low. 
-
-    process (S_AXI_ACLK)
-    begin
-        if rising_edge(S_AXI_ACLK) then
-            if S_AXI_ARESETN = '0' then
-                axi_wready     <= '0';
-            else
-                if (axi_wready = '0' and S_AXI_WVALID = '1' and axi_awv_awr_flag = '1') then
-                    axi_wready <= '1';
-                -- elsif (axi_awv_awr_flag = '0') then
-                elsif (S_AXI_WLAST = '1' and axi_wready = '1') then
-
-                    axi_wready <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
-    -- Implement write response logic generation
-
-    -- The write response and response valid signals are asserted by the slave 
-    -- when axi_wready, S_AXI_WVALID, axi_wready and S_AXI_WVALID are asserted.  
-    -- This marks the acceptance of address and indicates the status of 
-    -- write transaction.
-
-    process (S_AXI_ACLK)
-    begin
-        if rising_edge(S_AXI_ACLK) then
-            if S_AXI_ARESETN = '0' then
-                axi_bvalid     <= '0';
-                axi_bresp      <= "00";                               --need to work more on the responses
-                axi_buser      <= (others => '0');
-            else
-                if (axi_awv_awr_flag = '1' and axi_wready = '1' and S_AXI_WVALID = '1' and axi_bvalid = '0' and S_AXI_WLAST = '1') then
-                    axi_bvalid <= '1';
-                    axi_bresp  <= "00";
-                elsif (S_AXI_BREADY = '1' and axi_bvalid = '1') then
-                    --check if bready is asserted while bvalid is high)
-                    axi_bvalid <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
     -- Implement axi_arready generation
 
     -- axi_arready is asserted for one S_AXI_ACLK clock cycle when
@@ -387,8 +254,6 @@ begin
     begin
         if rising_edge(S_AXI_ACLK) then
             if S_AXI_ARESETN = '0' then
-                axi_araddr            <= (others => '0');
-                axi_arburst           <= (others => '0');
                 axi_arlen             <= (others => '0');
                 axi_arlen_cntr        <= (others => '0');
                 axi_rlast             <= '0';
@@ -397,41 +262,18 @@ begin
             else
                 if (axi_arready = '0' and S_AXI_ARVALID = '1' and axi_arv_arr_flag = '0') then
                     -- address latching 
-                    axi_araddr        <= S_AXI_ARADDR(C_S_AXI_ADDR_WIDTH - 1 downto 0);  ---- start address of transfer
                     axi_arlen_cntr    <= (others => '0');
                     axi_rlast         <= '0';
-                    axi_arburst       <= S_AXI_ARBURST;
                     axi_arlen         <= S_AXI_ARLEN;
                 -- fifo_rdreq <= '0';
                 elsif((axi_arlen_cntr <= axi_arlen) and axi_rvalid = '1' and S_AXI_RREADY = '1') then
                     axi_arlen_cntr    <= std_logic_vector (unsigned(axi_arlen_cntr) + 1);
                     -- fifo_rdreq <= '1';
                     axi_rlast         <= '0';
-
-                    case (axi_arburst) is
-                        when "00"                                                             =>        -- fixed burst
-                            -- The read address for all the beats in the transaction are fixed
-                            axi_araddr                                             <= axi_araddr;       ----for arsize = 4 bytes (010)
-                        when "01"                                                             =>        --incremental burst
-                            -- The read address for all the beats in the transaction are increments by awsize
-                            axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)     <= std_logic_vector (unsigned(axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --araddr aligned to 4 byte boundary
-                            axi_araddr(ADDR_LSB-1 downto 0)                        <= (others => '0');  ----for awsize = 4 bytes (010)
-                        when "10"                                                             =>        --Wrapping burst
-                            -- The read address wraps when the address reaches wrap boundary 
-                            if (ar_wrap_en = '1') then
-                                axi_araddr                                         <= std_logic_vector (unsigned(axi_araddr) - (to_unsigned(ar_wrap_size, C_S_AXI_ADDR_WIDTH)));
-                            else
-                                axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB) <= std_logic_vector (unsigned(axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --araddr aligned to 4 byte boundary
-                                axi_araddr(ADDR_LSB-1 downto 0)                    <= (others => '0');  ----for awsize = 4 bytes (010)
-                            end if;
-                        when others                                                           =>        --reserved (incremental burst for example)
-                            axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)     <= std_logic_vector (unsigned(axi_araddr(C_S_AXI_ADDR_WIDTH - 1 downto ADDR_LSB)) + 1);  --for arsize = 4 bytes (010)
-                            axi_araddr(ADDR_LSB-1 downto 0)                        <= (others => '0');
-                    end case;
                 elsif((axi_arlen_cntr = axi_arlen) and axi_rlast = '0' and axi_arv_arr_flag = '1') then
-                    axi_rlast                                                      <= '1';
+                    axi_rlast         <= '1';
                 elsif (S_AXI_RREADY = '1') then
-                    axi_rlast                                                      <= '0';
+                    axi_rlast         <= '0';
                 end if;
             end if;
         end if;
@@ -464,7 +306,6 @@ begin
     end process;
 
     -- Add user logic here
-    fifo_wrreq <= axi_wready and S_AXI_WVALID;
     fifo_rdreq <= axi_arv_arr_flag;
 
     --Output register or memory read data    
@@ -480,42 +321,59 @@ begin
         end if;
     end process;
 
-    top_hash_xilinx_1 : top_hash_xilinx
+    FIFO : xpm_fifo_async
         generic map (
-            INPUT_STRING_WIDTH => INPUT_STRING_WIDTH,
-            HASH_OUT_LEN       => HASH_OUT_LEN,
-            NUM_HASH_FUNC      => NUM_HASH_FUNC,
-            PIPELINE_AND_EN    => PIPELINE_AND_EN,
-            PIPELINE_XOR_EN    => PIPELINE_XOR_EN,
-            READ_FIFO_WIDTH    => READ_FIFO_WIDTH,
-            WRITE_FIFO_WIDTH   => WRITE_FIFO_WIDTH,
-            ROM_OUT_WIDTH      => ROM_OUT_WIDTH)
+            CDC_SYNC_STAGES     => 2,                                 -- DECIMAL
+            DOUT_RESET_VALUE    => "0",                               -- String
+            ECC_MODE            => "no_ecc",                          -- String
+            FIFO_MEMORY_TYPE    => "auto",                            -- String
+            FIFO_READ_LATENCY   => 1,                                 -- DECIMAL
+            FIFO_WRITE_DEPTH    => WRITE_DEPTH,                       -- DECIMAL
+            FULL_RESET_VALUE    => 0,                                 -- DECIMAL
+            PROG_EMPTY_THRESH   => 10,                                -- DECIMAL
+            PROG_FULL_THRESH    => 10,                                -- DECIMAL
+            RD_DATA_COUNT_WIDTH => READ_COUNT_BITS,                   -- DECIMAL
+            READ_DATA_WIDTH     => READ_WIDTH,                        -- DECIMAL
+            read_mode           => "std",                             -- String
+            RELATED_CLOCKS      => 0,                                 -- DECIMAL
+            USE_ADV_FEATURES    => "0404",                            -- String
+            WAKEUP_TIME         => 0,                                 -- DECIMAL
+            WRITE_DATA_WIDTH    => WRITE_WIDTH,                       -- DECIMAL
+            WR_DATA_COUNT_WIDTH => WRITE_COUNT_BITS                   -- DECIMAL
+            )
         port map (
-            axi_clk            => S_AXI_ACLK,
-            core_clk           => core_clk,
-            rst_n              => S_AXI_ARESETN,
-            data_in            => S_AXI_WDATA,
-            wrreq              => fifo_wrreq,
-            rdreq              => fifo_rdreq,
-            intr               => intr,
-            rx_wrcount         => rx_wrcount_buf,
-            rx_rdcount         => rx_rdcount_buf,
-            rx_empty           => rx_empty_buf,
-            rx_full            => rx_full_buf,
-            tx_wrcount         => tx_wrcount_buf,
-            tx_rdcount         => tx_rdcount_buf,
-            tx_empty           => tx_empty_buf,
-            tx_full            => tx_full_buf,
-            data_out           => data_out);
+            almost_empty        => open,
+            almost_full         => open,
+            data_valid          => open,
+            dbiterr             => open,
+            dout                => data_out,
+            empty               => empty_buf,
+            full                => full_buf,
+            overflow            => open,
+            prog_empty          => open,
+            prog_full           => open,
+            rd_data_count       => rdcount_buf,
+            rd_rst_busy         => open,
+            sbiterr             => open,
+            underflow           => open,
+            wr_ack              => open,
+            wr_data_count       => wrcount_buf,
+            wr_rst_busy         => open,
+            din                 => data,
+            injectdbiterr       => logic_0,
+            injectsbiterr       => logic_0,
+            rd_clk              => S_AXI_ACLK,
+            rd_en               => fifo_rdreq,
+            rst                 => rst,
+            sleep               => logic_0,
+            wr_clk              => core_clk,
+            wr_en               => fifo_wrreq
+            );
 
-    rx_wrcount <= rx_wrcount_buf;
-    rx_rdcount <= rx_rdcount_buf;
-    rx_empty   <= rx_empty_buf;
-    rx_full    <= rx_full_buf;
-    tx_wrcount <= tx_wrcount_buf;
-    tx_rdcount <= tx_rdcount_buf;
-    tx_empty   <= tx_empty_buf;
-    tx_full    <= tx_full_buf;
+    wrcount <= wrcount_buf;
+    rdcount <= rdcount_buf;
+    empty   <= empty_buf;
+    full    <= full_buf;
 
     -- User logic ends
 
