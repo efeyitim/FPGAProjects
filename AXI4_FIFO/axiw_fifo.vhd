@@ -199,8 +199,9 @@ architecture arch_imp of AXIW_FIFO is
     signal rdcount_buf : std_logic_vector(READ_COUNT_BITS - 1 downto 0);
     signal full_buf    : std_logic;
     signal empty_buf   : std_logic;
-    signal rst : std_logic;
-    
+    signal rst         : std_logic;
+    signal logic_0     : std_logic;
+
 begin
     -- I/O Connections assignments
 
@@ -218,6 +219,7 @@ begin
     S_AXI_BID     <= S_AXI_AWID;
     S_AXI_RID     <= (others => '0');
     rst           <= not S_AXI_ARESETN;
+    logic_0       <= '0';
 
     -- Implement axi_awready generation
 
