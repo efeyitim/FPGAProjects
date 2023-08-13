@@ -65,11 +65,11 @@ begin  -- architecture rtl
             TBYTEOUT       => open,                                   -- 1-bit output: Byte group tristate
             TFB            => open,                                   -- 1-bit output: 3-state control
             TQ             => open,                                   -- 1-bit output: 3-state control
-            CLK            => clk_serial,                              -- 1-bit input: High speed clock
-            CLKDIV         => clk_pixel,                               -- 1-bit input: Divided clock
+            CLK            => SerialClk,                              -- 1-bit input: High speed clock
+            CLKDIV         => PixelClk,                               -- 1-bit input: Divided clock
             -- D1 - D8: 1-bit (each) input: Parallel data inputs (1-bit each)
             D1             => pin(0),
-            D2             => pin(1),
+            D2             => pin(1)
             D3             => pin(2),
             D4             => pin(3),
             D5             => pin(4),
@@ -94,7 +94,7 @@ begin  -- architecture rtl
         generic map (
             DATA_RATE_OQ   => "DDR",
             DATA_RATE_TQ   => "SDR",
-            DATA_WIDTH     => 10,
+            DATA_WIDTH     => kParallelWidth,
             TRISTATE_WIDTH => 1,
             TBYTE_CTL      => "FALSE",
             TBYTE_SRC      => "FALSE",
